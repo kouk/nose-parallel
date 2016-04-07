@@ -12,7 +12,11 @@ class ParallelPlugin(Plugin):
 
     def configure(self, options, config):
         super(ParallelPlugin, self).configure(options, config)
+        print "SALT: {}".format(options.parallel_salt)
+        print "SALT_ENV: {}=".format(options.parallel_salt_env, os.environ.get(options.parallel_salt_env))
+        print "CIRCLE_BUILD_NUM: {}".format(os.environ.get('CIRCLE_BUILD_NUM'))
         self.salt = options.parallel_salt or os.environ.get(options.parallel_salt_env, '')
+        print "self.salt: {}".format(self.salt)
         self.total_nodes = int(os.environ.get('CIRCLE_NODE_TOTAL') or os.environ.get('NODE_TOTAL', 1))
         self.node_index = int(os.environ.get('CIRCLE_NODE_INDEX') or os.environ.get('NODE_INDEX', 0))
 
